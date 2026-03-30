@@ -50,7 +50,6 @@ public class ComprasController {
         return ResponseEntity.ok(compra);
     }
 
-    /**Consulta estado */
     @GetMapping("/{id}/estado")
     public ResponseEntity<?> obtenerEstado(@PathVariable Long id) {
         CompraDTO compra = service.obterPorId(id);
