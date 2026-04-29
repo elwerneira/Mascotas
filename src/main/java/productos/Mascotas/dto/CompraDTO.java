@@ -1,4 +1,4 @@
-package productos.Mascotas.dto;
+package productos.mascotas.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,14 +10,17 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 /** Registro de Orden */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CompraDTO {
+@EqualsAndHashCode(callSuper = false)
+public class CompraDTO extends RepresentationModel<CompraDTO> {
 
     private Long id;
 

@@ -1,8 +1,10 @@
-package productos.Mascotas.controller;
+package productos.mascotas.controller;
 
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import productos.Mascotas.dto.CompraDTO;
-import productos.Mascotas.dto.CrearCompraDTO;
-import productos.Mascotas.services.ComprasService;
+import productos.mascotas.dto.CompraDTO;
+import productos.mascotas.dto.CrearCompraDTO;
+import productos.mascotas.services.ComprasService;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @RestController
@@ -34,8 +39,15 @@ public class ComprasController {
 
 
     @GetMapping
-    public ResponseEntity<List<CompraDTO>> obtenerTodas() {
-        return ResponseEntity.ok(service.obtenerToda());
+    public ResponseEntity<CollectionModel<CompraDTO>> obtenerTodas() {
+        List<CompraDTO> compras = service.obtenerToda().stream()
+                .map(this::agregarLinks)
+                .toList();
+
+        CollectionModel<CompraDTO> response = CollectionModel.of(compras);
+        response.add(linkTo(methodOn(ComprasController.class).obtenerTodas()).withSelfRel());
+
+        return ResponseEntity.ok(response);
     }
 
 
@@ -48,7 +60,7 @@ public class ComprasController {
                     .body("Orden de compra no encontrada. ID: " + id);
         }
 
-        return ResponseEntity.ok(compra);
+        return ResponseEntity.ok(agregarLinks(compra));
     }
 
     @GetMapping("/{id}/estado")
@@ -60,14 +72,19 @@ public class ComprasController {
                     .body("Orden de compra no encontrada. ID: " + id);
         }
 
-        return ResponseEntity.ok(Map.of("id", compra.getId(), "estado", compra.getEstado()));
+        EntityModel<Map<String, Object>> response = EntityModel.of(
+                Map.of("id", compra.getId(), "estado", compra.getEstado()));
+        response.add(linkTo(methodOn(ComprasController.class).obtenerEstado(id)).withSelfRel());
+        response.add(linkTo(methodOn(ComprasController.class).obtenerPorId(id)).withRel("compra"));
+
+        return ResponseEntity.ok(response);
     }
 
     /**Crea nueva orden */
     @PostMapping
     public ResponseEntity<CompraDTO> crear(@Valid @RequestBody CrearCompraDTO request) {
         CompraDTO creada = service.crear(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(creada);
+        return ResponseEntity.status(HttpStatus.CREATED).body(agregarLinks(creada));
     }
 
     /**Actualiza datos ya generados */
@@ -80,7 +97,7 @@ public class ComprasController {
                     .body("Orden de compra no encontrada. ID: " + id);
         }
 
-        return ResponseEntity.ok(actualizada);
+        return ResponseEntity.ok(agregarLinks(actualizada));
     }
 
     /**Cancela orden por cambio de estado*/
@@ -93,7 +110,7 @@ public class ComprasController {
                     .body("Orden de compra no encontrada. ID: " + id);
         }
 
-        return ResponseEntity.ok(cancelada);
+        return ResponseEntity.ok(agregarLinks(cancelada));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
@@ -105,5 +122,15 @@ public class ComprasController {
         }
 
         return ResponseEntity.noContent().build();
+    }
+
+    private CompraDTO agregarLinks(CompraDTO compra) {
+        Long id = compra.getId();
+        compra.add(linkTo(methodOn(ComprasController.class).obtenerPorId(id)).withSelfRel());
+        compra.add(linkTo(methodOn(ComprasController.class).obtenerTodas()).withRel("compras"));
+        compra.add(linkTo(methodOn(ComprasController.class).obtenerEstado(id)).withRel("estado"));
+        compra.add(linkTo(methodOn(ComprasController.class).cancelar(id)).withRel("cancelar"));
+        compra.add(linkTo(methodOn(ComprasController.class).eliminar(id)).withRel("eliminar"));
+        return compra;
     }
 }

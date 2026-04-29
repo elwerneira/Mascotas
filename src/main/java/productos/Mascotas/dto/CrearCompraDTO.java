@@ -1,4 +1,4 @@
-package productos.Mascotas.dto;
+package productos.mascotas.dto;
 
 import java.math.BigDecimal;
 

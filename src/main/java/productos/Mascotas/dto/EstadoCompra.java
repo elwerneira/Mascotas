@@ -1,4 +1,4 @@
-package productos.Mascotas.dto;
+package productos.mascotas.dto;
 
 /**Estados de compras*/
 public enum EstadoCompra {

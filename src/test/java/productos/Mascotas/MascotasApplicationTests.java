@@ -1,4 +1,4 @@
-package productos.Mascotas;
+package productos.mascotas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

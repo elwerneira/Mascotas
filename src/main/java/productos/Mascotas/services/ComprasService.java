@@ -1,4 +1,4 @@
-package productos.Mascotas.services;
+package productos.mascotas.services;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import productos.Mascotas.Entity.MascotaEntity;
-import productos.Mascotas.Repository.MascotasRespository;
-import productos.Mascotas.dto.CompraDTO;
-import productos.Mascotas.dto.CrearCompraDTO;
-import productos.Mascotas.dto.EstadoCompra;
+import productos.mascotas.entity.MascotaEntity;
+import productos.mascotas.repository.MascotasRespository;
+import productos.mascotas.dto.CompraDTO;
+import productos.mascotas.dto.CrearCompraDTO;
+import productos.mascotas.dto.EstadoCompra;
 
 @Service
 public class ComprasService {

@@ -1,4 +1,4 @@
-package productos.Mascotas.Entity;
+package productos.mascotas.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import productos.Mascotas.dto.EstadoCompra;
+import productos.mascotas.dto.EstadoCompra;
 
 @Entity
 @Table(name = "compras")

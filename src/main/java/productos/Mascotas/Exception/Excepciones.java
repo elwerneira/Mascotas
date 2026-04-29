@@ -1,4 +1,4 @@
-package productos.Mascotas.Exception;
+package productos.mascotas.exception;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
