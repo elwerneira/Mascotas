@@ -46,6 +46,7 @@ public class ComprasController {
 
         CollectionModel<CompraDTO> response = CollectionModel.of(compras);
         response.add(linkTo(methodOn(ComprasController.class).obtenerTodas()).withSelfRel());
+        response.add(linkTo(methodOn(ComprasController.class).crear(null)).withRel("crear"));
 
         return ResponseEntity.ok(response);
     }
@@ -129,6 +130,7 @@ public class ComprasController {
         compra.add(linkTo(methodOn(ComprasController.class).obtenerPorId(id)).withSelfRel());
         compra.add(linkTo(methodOn(ComprasController.class).obtenerTodas()).withRel("compras"));
         compra.add(linkTo(methodOn(ComprasController.class).obtenerEstado(id)).withRel("estado"));
+        compra.add(linkTo(methodOn(ComprasController.class).actualizar(id, null)).withRel("actualizar"));
         compra.add(linkTo(methodOn(ComprasController.class).cancelar(id)).withRel("cancelar"));
         compra.add(linkTo(methodOn(ComprasController.class).eliminar(id)).withRel("eliminar"));
         return compra;
