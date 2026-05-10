@@ -54,7 +54,7 @@ public class ComprasController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
-        CompraDTO compra = service.obterPorId(id);
+        CompraDTO compra = service.obtenerPorId(id);
 
         if (compra == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -66,7 +66,7 @@ public class ComprasController {
 
     @GetMapping("/{id}/estado")
     public ResponseEntity<?> obtenerEstado(@PathVariable Long id) {
-        CompraDTO compra = service.obterPorId(id);
+        CompraDTO compra = service.obtenerPorId(id);
 
         if (compra == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

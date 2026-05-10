@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import productos.mascotas.entity.MascotaEntity;
 
 @Repository
-public interface MascotasRespository extends JpaRepository<MascotaEntity, Long> {
+public interface MascotasRepository extends JpaRepository<MascotaEntity, Long> {
 }

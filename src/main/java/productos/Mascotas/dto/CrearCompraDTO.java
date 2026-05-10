@@ -21,11 +21,11 @@ public class CrearCompraDTO {
     @NotBlank(message = "El cliente es obligatorio")
     private String cliente;
 
-    @NotBlank(message = "Produco Obligario")
+    @NotBlank(message = "Producto obligatorio")
     private String producto;
 
     @NotNull(message = "Cantidad de producto obligatoria")
-    @Positive(message = "Cantidad debe ser mayo a 0")
+    @Positive(message = "Cantidad debe ser mayor a 0")
     private Integer cantidad;
 
     @NotNull(message = "Precio de producto(s) es obligatorio")

@@ -5,8 +5,10 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,10 +32,12 @@ public class CompraDTO extends RepresentationModel<CompraDTO> {
     @NotBlank(message = "Producto obligatorio")
     private String producto;
 
-    @NotNull(message = "Cantidad de producto obligatoria, debe ser mayor a 0")
+    @NotNull(message = "Cantidad de producto obligatoria")
+    @Positive(message = "Cantidad debe ser mayor a 0")
     private Integer cantidad;
 
     @NotNull(message = "Precio de producto(s) es obligatorio")
+    @DecimalMin(value = "1", message = "El precio por unidad debe ser mayor a 1")
     private BigDecimal precioUnitario;
     
     private BigDecimal total;

@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import productos.mascotas.entity.MascotaEntity;
-import productos.mascotas.repository.MascotasRespository;
+import productos.mascotas.repository.MascotasRepository;
 import productos.mascotas.dto.CompraDTO;
 import productos.mascotas.dto.CrearCompraDTO;
 import productos.mascotas.dto.EstadoCompra;
@@ -15,9 +15,9 @@ import productos.mascotas.dto.EstadoCompra;
 @Service
 public class ComprasService {
 
-    private final MascotasRespository repository;
+    private final MascotasRepository repository;
 
-    public ComprasService(MascotasRespository repository) {
+    public ComprasService(MascotasRepository repository) {
         this.repository = repository;
     }
 
@@ -29,7 +29,7 @@ public class ComprasService {
     }
 
     /**Buscar por id*/
-    public CompraDTO obterPorId(Long id) {
+    public CompraDTO obtenerPorId(Long id) {
         return repository.findById(id)
                 .map(this::toDto)
                 .orElse(null);
